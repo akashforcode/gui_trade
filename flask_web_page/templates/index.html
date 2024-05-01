@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuous Data Printing</title>
+</head>
+<body>
+    <h1>Continuous Data Printing</h1>
+    <button id="startButton">Start Stream</button>
+    <button id="stopButton">Stop Stream</button>
+    <button id="getDataButton">Get Data</button>
+    <div id="data">Initial data</div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', () => {
+            fetch('/start_stream')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Streaming started');
+                    } else {
+                        console.error('Failed to start streaming');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('stopButton').addEventListener('click', () => {
+            fetch('/stop_stream')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Streaming stopped');
+                    } else {
+                        console.error('Failed to stop streaming');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('getDataButton').addEventListener('click', () => {
+            fetch('/get_data')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('data').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
